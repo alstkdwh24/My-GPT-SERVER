@@ -21,31 +21,5 @@ import java.util.Map;
 public class GPTController {
 
 
-    @Value("${naverSecretId}")
-    private String naverSecretId;
-
-    @GetMapping("/kakaoUrl")
-    public ResponseEntity<String> kakaoUrl() {
-        String kakaoUrl = "https://kauth.kakao.com/oauth/authorize";
-        System.out.println("kakaoUrl: " + kakaoUrl);
-        return ResponseEntity.ok(kakaoUrl);
-    }
-
-    @PostMapping("/kakaoToken")
-    public ResponseEntity<String> kakaoToken(@RequestBody Map<String, String> body){
-        String kakaoToken = body.get("kakaoToken");
-        System.out.println("Access Token: " + kakaoToken);
-        return ResponseEntity.ok("kakaoToken");
-    }
-
-    @GetMapping("/naverLogin")
-    public ResponseEntity<String> naverLogin() {
-        String clientId = naverSecretId; // 네이버 개발자 센터에서 발급받은 클라이언트 ID
-        String redirectUri = URLEncoder.encode("https://yourdomain.com/oauth/naver/callback", StandardCharsets.UTF_8);
-        String naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUri + "&state=STATE_STRING";
-        System.out.println("naverLoginUrl: " + naverLoginUrl + " "+ naverSecretId);
-
-        return ResponseEntity.ok(naverLoginUrl);
-    }
 
 }
