@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>네이버 로그인 완료</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        // 2초 후 앱 딥링크로 이동 (딥링크는 실제 앱에 맞게 수정)
+        setTimeout(function() {
+            window.location.href = "myapp://naverlogincomplete";
+        }, 2000);
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; margin-top: 100px; }
+        .message { font-size: 1.3em; margin-bottom: 20px; }
+        .sub { color: #888; }
+    </style>
+</head>
+<body>
+<div class="message">네이버 로그인에 성공했습니다!</div>
+<div class="sub">잠시 후 앱으로 자동 이동합니다.<br>이동하지 않으면 <a href="myapp://naverlogincomplete">여기</a>를 눌러주세요.</div>
+</body>
+
+<script src="/js/NaverCode.js"></script>
+</html>

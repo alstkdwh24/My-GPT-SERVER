@@ -1,13 +1,13 @@
 package com.example.flutter_gpt_project_backend.member.dto.response;
 
-public class KakaoLoginDTOResponse {
+public class KakaoLoginResponseDTO {
 
     private String 	profile_nickname;
     private String  profile_image;
     private String account_email;
 
-    public KakaoLoginDTOResponse(){}
-    public KakaoLoginDTOResponse(String profile_nickname, String profile_image, String account_email) {
+    public KakaoLoginResponseDTO(){}
+    public KakaoLoginResponseDTO(String profile_nickname, String profile_image, String account_email) {
         this.profile_nickname = profile_nickname;
         this.profile_image = profile_image;
         this.account_email = account_email;

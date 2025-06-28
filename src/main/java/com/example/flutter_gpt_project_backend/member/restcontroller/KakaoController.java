@@ -1,7 +1,7 @@
 package com.example.flutter_gpt_project_backend.member.restcontroller;
 
 import com.example.flutter_gpt_project_backend.member.dto.request.KakaoLoginDTO;
-import com.example.flutter_gpt_project_backend.member.dto.response.KakaoLoginDTOResponse;
+import com.example.flutter_gpt_project_backend.member.dto.response.KakaoLoginResponseDTO;
 import com.example.flutter_gpt_project_backend.member.dto.response.KakaoResponseLoginDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +41,7 @@ public class KakaoController {
     }
 
     @PostMapping("/userInfo")
-    public ResponseEntity<KakaoLoginDTOResponse> kakaoUserInfo(@ModelAttribute KakaoLoginDTO dto) throws JsonProcessingException {
+    public ResponseEntity<KakaoLoginResponseDTO> kakaoUserInfo(@ModelAttribute KakaoLoginDTO dto) throws JsonProcessingException {
         String kakaoTokens = kakaoToken;
         System.out.println("Access Token: " + kakaoTokens);
         RestTemplate restTemplate = new RestTemplate();
@@ -73,7 +73,7 @@ public class KakaoController {
             email = kakaoAccount.path("email").asText();
             profileImage = profile.path("profile_image_url").asText();
         }
-        KakaoLoginDTOResponse result = new KakaoLoginDTOResponse(nickname, email, profileImage);
+        KakaoLoginResponseDTO result = new KakaoLoginResponseDTO(nickname, email, profileImage);
 
         return ResponseEntity.ok(result);
     }
