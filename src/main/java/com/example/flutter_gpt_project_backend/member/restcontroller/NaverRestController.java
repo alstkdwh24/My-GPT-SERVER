@@ -13,11 +13,11 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api/naver")
 @CrossOrigin("*") // 모든 도메인에서 접근 허용
 public class NaverRestController {
-    @Value("${naverSecretId}")
+    @Value("${naverSecretIds}")
     private String naverSecretId;
 
 
-    @Value("${naverSecretValue}")
+    @Value("${naverSecretValues}")
     private String naverSecretValue;
     final String access_token = "";
 

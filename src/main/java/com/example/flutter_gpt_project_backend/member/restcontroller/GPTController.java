@@ -24,11 +24,11 @@ import java.util.Map;
 
 public class GPTController {
 
-    @Value("${groqcloudGPT}")
+    @Value("${GPT}")
     private String groqcloudGPT;
 
     @PostMapping("/groqAsk")
-    public ResponseEntity<String> groqAsk( @RequestBody GroqGPTDTO dto) {
+    public ResponseEntity<String> groqAsk( @RequestBody GroqGPTDTO dto, HttpSession session) {
 
       String messageAsk= dto.getMessage();
         System.out.println("Received messageAsk: " + messageAsk);
@@ -52,10 +52,24 @@ public class GPTController {
 
         ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
         System.out.println("Response: " + response.getBody());
+
+        // 세션에 응답 저장
+        session.setAttribute("lastGptResponse", response.getBody());
         return ResponseEntity.ok(response.getBody());
 
     }
 
+
+    @GetMapping("/groqResponse")
+    public ResponseEntity<String> groqResponse(HttpSession session) {
+        String lastResponse = (String) session.getAttribute("lastGptResponse");
+        if (lastResponse != null) {
+            return ResponseEntity.ok(lastResponse);
+        } else {
+            return ResponseEntity.status(404).body("No response found in session.");
+        }
+
+    }
 
 
 
