@@ -27,6 +27,9 @@ public class GPTController {
     @Value("${GPT}")
     private String groqcloudGPT;
 
+    @Value("${TogetherAIGPTs}")
+    private String TogetherAIGPTs;
+
     @PostMapping("/groqAsk")
     public ResponseEntity<String> groqAsk( @RequestBody GroqGPTDTO dto, HttpSession session) {
 
@@ -60,18 +63,47 @@ public class GPTController {
     }
 
 
-    @GetMapping("/groqResponse")
-    public ResponseEntity<String> groqResponse(HttpSession session) {
-        String lastResponse = (String) session.getAttribute("lastGptResponse");
-        if (lastResponse != null) {
-            return ResponseEntity.ok(lastResponse);
-        } else {
-            return ResponseEntity.status(404).body("No response found in session.");
-        }
+//    @GetMapping("/groqResponse")
+//    public ResponseEntity<String> groqResponse(HttpSession session) {
+//        String lastResponse = (String) session.getAttribute("lastGptResponse");
+//        if (lastResponse != null) {
+//            return ResponseEntity.ok(lastResponse);
+//        } else {
+//            return ResponseEntity.status(404).body("No response found in session.");
+//        }
+//
+//    }
 
+
+
+    @PostMapping("/GPTAsk")
+    public ResponseEntity<String> gptAsk(@RequestBody GroqGPTDTO dto, HttpSession session) {
+        String messageAsk = dto.getMessage();
+        System.out.println("Received messageAsk: " + messageAsk);
+
+        String url = "https://api.together.xyz/v1/chat/completions";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + TogetherAIGPTs);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free");
+        List<Map<String, String>> messages = new ArrayList<>();
+        Map<String, String> message = new HashMap<>();
+        message.put("role", "user");
+        message.put("content", messageAsk);
+        messages.add(message);
+
+        body.put("messages", messages);
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+        System.out.println("Response: " + response.getBody());
+
+        // 세션에 응답 저장
+        session.setAttribute("together", response.getBody());
+        return ResponseEntity.ok(response.getBody());
     }
-
-
-
 
 }
