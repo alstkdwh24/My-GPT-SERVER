@@ -39,6 +39,18 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'mysql:mysql-connector-java:8.0.33'
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //modelMapper 의존성
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+
+
+    //@Valid나 modelMapper를 사용하기 위한 의존성
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
+    //시큐러티
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 }
 

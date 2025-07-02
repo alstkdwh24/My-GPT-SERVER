@@ -17,6 +17,6 @@ public class NaverController {
         session.setAttribute("state", state);
 
         System.out.println("네이버 로그인 완료 페이지로 이동합니다.");
-        return "/api/naver/naverLoginComplete";
+        return "api/naver/naverLoginComplete";
     }
 }
