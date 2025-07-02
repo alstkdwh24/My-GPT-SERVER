@@ -1,7 +1,6 @@
-package com.example.flutter_gpt_project_backend.member.restcontroller;
+package com.example.flutter_gpt_project_backend.gpt.restcontroller;
 
 import com.example.flutter_gpt_project_backend.member.dto.request.GroqGPTDTO;
-import com.example.flutter_gpt_project_backend.member.dto.request.KakaoLoginDTO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -11,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +44,6 @@ public class GPTController {
         List<Map<String, String>> messages = new ArrayList<>();
         Map<String, String> message = new HashMap<>();
         message.put("role", "user");
-        message.put("content", messageAsk);
         messages.add(message);
 
         body.put("messages", messages);
