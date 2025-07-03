@@ -25,13 +25,11 @@ repositories {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
@@ -40,6 +38,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'mysql:mysql-connector-java:8.0.33'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    runtimeOnly 'com.h2database:h2'
 
     //modelMapper 의존성
     implementation 'org.modelmapper:modelmapper:3.1.1'
@@ -49,8 +48,16 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 
-    //시큐러티
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
+
+    implementation 'org.jasypt:jasypt:1.9.3'
+
+// JWT 의존성
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 }
 

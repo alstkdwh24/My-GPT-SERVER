@@ -3,7 +3,6 @@ package com.example.flutter_gpt_project_backend.member.entity;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
-import javax.management.relation.Role;
 import java.util.UUID;
 @Entity
 @Table(name = "MEMBER")

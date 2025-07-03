@@ -1,6 +1,7 @@
 package com.example.flutter_gpt_project_backend.member.restcontroller;
 
 import com.example.flutter_gpt_project_backend.member.dto.request.MemberReqDTO;
+import com.example.flutter_gpt_project_backend.member.entity.Member;
 import com.example.flutter_gpt_project_backend.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
