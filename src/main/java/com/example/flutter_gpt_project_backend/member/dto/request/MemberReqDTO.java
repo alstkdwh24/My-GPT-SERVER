@@ -19,16 +19,19 @@ public class MemberReqDTO {
 
     private String role;
 
+    private String nickname;
+
 
     public MemberReqDTO() {}
 
-    public MemberReqDTO(UUID id, String userId, String userPw, String email, String name, String role) {
+    public MemberReqDTO(UUID id, String userId, String userPw, String email, String name, String role, String nickname) {
         this.id = id;
         this.userId = userId;
         this.userPw = userPw;
         this.email = email;
         this.name = name;
         this.role = role;
+        this.nickname = nickname;
     }
 
     public UUID getId() {
@@ -82,6 +85,14 @@ public class MemberReqDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 

@@ -29,42 +29,38 @@ public class GPTController {
 
     @PostMapping("/groqAsk")
     public ResponseEntity<String> groqAsk(@RequestBody GroqGPTDTO dto, HttpSession session) {
-List<GroqGPTDTO.Message> incomingMessages =dto.getMessages();
-        System.out.println("Received messages:");
-        for (GroqGPTDTO.Message msg : incomingMessages) {
-            System.out.println("Role: " + msg.getRole() + ", Content: " + msg.getContent());
+        List<GroqGPTDTO.Message> message = dto.getMessages();
+        if (message == null) {
+            return ResponseEntity.badRequest().body("messages 필드가 누락되었습니다.");
         }
-
         String url = "https://api.groq.com/openai/v1/chat/completions";
         RestTemplate restTemplate = new RestTemplate();
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + groqcloudGPT);
-
-        List<Map<String,String>> messages = new ArrayList<>();
-        for (GroqGPTDTO.Message msg : incomingMessages) {
-            if (msg.getRole() != null && msg.getContent() != null && !msg.getContent().isEmpty()) {
-                Map<String, String> map = new HashMap<>();
-                map.put("role", msg.getRole());
-                map.put("content", msg.getContent());
-                messages.add(map);
-            }
+        headers.setBearerAuth(groqcloudGPT); // Groq Cloud API Key 설정
+        List<Map<String,String>> messages=new ArrayList<>();
+        for(GroqGPTDTO.Message msg: message){
+            if(msg.getRole() == null || msg.getContent() == null) {
+                return ResponseEntity.badRequest().body("Invalid message format: role or content is missing.");
         }
-        Map<String, Object> body = new HashMap<>();
-        body.put("model", "meta-llama/llama-4-scout-17b-16e-instruct");
-        body.put("messages", messages);
+            Map<String, String>  map = new HashMap<>();
+            map.put("role", msg.getRole());
+            map.put("content", msg.getContent());
+            messages.add(map);
+        }
 
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", "meta-llama/llama-4-scout-17b-16e-instruct");
+        requestBody.put("messages", messages);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
 
+        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         System.out.println("Response: " + response.getBody());
-
-        // 세션에 응답 저장
         session.setAttribute("lastGptResponse", response.getBody());
 
         return ResponseEntity.ok(response.getBody());
-
     }
 
 
@@ -83,31 +79,32 @@ List<GroqGPTDTO.Message> incomingMessages =dto.getMessages();
 
     @PostMapping("/GPTAsk")
     public ResponseEntity<String> gptAsk(@RequestBody GroqGPTDTO dto, HttpSession session) {
-List<GroqGPTDTO.Message> messageAsk=dto.getMessages();
-        System.out.println("Received messageAsk: " + messageAsk);
-
-        String url = "https://api.together.xyz/v1/chat/completions";
+        List<GroqGPTDTO.Message> message = dto.getMessages();
+        String uri = "https://api.together.xyz/v1/chat/completions";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + TogetherAIGPTs);
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("model", "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free");
+        headers.setBearerAuth(TogetherAIGPTs); // Together AI API Key 설정
         List<Map<String, String>> messages = new ArrayList<>();
-        Map<String, String> message = new HashMap<>();
-        message.put("role", "user");
-        messages.add(message);
-
-        body.put("messages", messages);
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-        ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+        for (GroqGPTDTO.Message msg : message) {
+            if (msg.getRole() == null || msg.getContent() == null) {
+                return ResponseEntity.badRequest().body("Invalid message format: role or content is missing.");
+            }
+            Map<String, String> map = new HashMap<>();
+            map.put("role", msg.getRole());
+            map.put("content", msg.getContent());
+            messages.add(map);
+        }
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free");
+        requestBody.put("messages", messages);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
         System.out.println("Response: " + response.getBody());
-
-        // 세션에 응답 저장
-        session.setAttribute("together", response.getBody());
+        session.setAttribute("lastGptResponse", response.getBody());
         return ResponseEntity.ok(response.getBody());
+
+
     }
 
 }
