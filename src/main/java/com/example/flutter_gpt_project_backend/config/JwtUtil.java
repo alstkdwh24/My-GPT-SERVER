@@ -32,7 +32,7 @@ public class JwtUtil {
 
     }
 
-    public String creatAccessToken(CustomUserInfoDTO dto){
+    public String createAccessToken(CustomUserInfoDTO dto){
         System.out.println("JwtUtil creatAccessToken called");
         return createToken(dto, accessTokenExpTime);
     }
@@ -94,4 +94,5 @@ public class JwtUtil {
         }
 
     }
+
 }

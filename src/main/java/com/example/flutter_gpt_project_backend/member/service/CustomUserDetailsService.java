@@ -1,6 +1,6 @@
 package com.example.flutter_gpt_project_backend.member.service;
 
-import com.example.flutter_gpt_project_backend.config.CustomUserDetails;
+import com.example.flutter_gpt_project_backend.config.CustomSecurityUserDetails;
 import com.example.flutter_gpt_project_backend.member.entity.Member;
 import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .findMemberByUserId(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        return new CustomUserDetails(member);
+        return new CustomSecurityUserDetails(member);
 
     }
 }
