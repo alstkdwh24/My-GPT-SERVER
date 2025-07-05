@@ -1,5 +1,6 @@
 package com.example.flutter_gpt_project_backend.member.restcontroller;
 
+import com.example.flutter_gpt_project_backend.member.dto.request.LoginRequestDTO;
 import com.example.flutter_gpt_project_backend.member.dto.request.MemberReqDTO;
 import com.example.flutter_gpt_project_backend.member.entity.Member;
 import com.example.flutter_gpt_project_backend.member.service.MemberService;
@@ -7,7 +8,6 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("/api/jwt")
@@ -42,6 +40,15 @@ public class JwtController {
 
         return ResponseEntity.status(HttpStatus.OK).body(id);
 }
+    @PostMapping(value = "/login", consumes = "application/json")
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO dto) {
+        String loginMember = memberService.login(dto);
 
+        if (loginMember == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(loginMember);
+    }
 
 }

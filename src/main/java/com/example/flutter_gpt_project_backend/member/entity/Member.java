@@ -1,21 +1,18 @@
 package com.example.flutter_gpt_project_backend.member.entity;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "member")
 public class Member {
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
-    @Column(name = "userId", nullable = false, unique = true)
+    @Column(name = "user_id",  unique = true)
     private String userId;
-    @Column(name = "userPw", nullable = false)
-
+    @Column(name = "user_pw")
     private String userPw;
     @Column(name = "email", length = 50, updatable = false, unique = true)
 
@@ -23,6 +20,9 @@ public class Member {
     @Column(name = "name", nullable = false)
 
     private String name;
+    @Column(name = "nickname", nullable = false)
+
+    private String nickname;
 
     @Enumerated(EnumType.STRING) // Enum 타입으로 변경
     private Role role;
@@ -74,6 +74,23 @@ public class Member {
     }
 
     public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    public Member() {}
+    public Member(UUID id, String userId, String userPw, String email, String name, String nickname, Role role) {
+        this.id = id;
+        this.userId = userId;
+        this.userPw = userPw;
+        this.email = email;
+        this.name = name;
+        this.nickname = nickname;
         this.role = role;
     }
 }

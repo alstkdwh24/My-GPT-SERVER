@@ -56,12 +56,25 @@ public class SecurityConfig {
         http.addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter
                 .class);
 
+        // OAuth 2.0 로그인 방식 설정
+        http
+                .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
+                        .defaultSuccessUrl("/oauth-login")
+                        .failureUrl("/oauth-login/login")
+                        .permitAll());
+
+        http
+                .logout((auth) -> auth
+                        .logoutUrl("/oauth-login/logout"));
+
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(AUTH_WHITELIST).permitAll()
 
 
                 //@PreAuthorization 사용 -> 모든 경로에 대한 인증처리는 pass
                 .anyRequest().permitAll()
+
+
         );
 
         return http.build();
