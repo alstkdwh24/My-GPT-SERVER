@@ -58,10 +58,13 @@ public class SecurityConfig {
 
         // OAuth 2.0 로그인 방식 설정
         http
-                .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
-                        .defaultSuccessUrl("/oauth-login")
-                        .failureUrl("/oauth-login/login")
-                        .permitAll());
+                .oauth2Login((auth) -> auth
+                        .loginPage("/oauth-login/login/google_login") // ❌ 사용자 정의 로그인 페이지 경로
+                        .defaultSuccessUrl("/oauth-login/login/home") // ✅ 성공 시 이동할 경로
+                        .failureUrl("/oauth-login/login") // ❌ 실패 시 이동할 경로
+                        .permitAll()
+                );
+
 
         http
                 .logout((auth) -> auth

@@ -11,16 +11,13 @@ import java.util.Map;
 
 public class CustomOauth2UserDetails implements UserDetails, OAuth2User {
 
-    private GoogleMember googleMember;
-    private Map<String, Object> attributes;
+    private final GoogleMember googleMember;
+    private final Map<String, Object> attributes;
 
-    public void CustomUserDetails(GoogleMember googleMember, Map<String, Object> attributes) {
+
+    public CustomOauth2UserDetails(GoogleMember googleMember, Map<String, Object> attributes) {
         this.googleMember = googleMember;
         this.attributes = attributes;
-    }
-
-    public CustomOauth2UserDetails(GoogleMember googleMember) {
-        this.googleMember = googleMember;
     }
 
     @Override
