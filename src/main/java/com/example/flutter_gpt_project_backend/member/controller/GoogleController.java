@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/oauth-login")
 public class GoogleController {
 
-    @GetMapping("/login/google_login")
+        @GetMapping("/login/google_login")
     public String googleLogin() {
 
         return "oauth-login/login/google_login";  // 템플릿 경로
