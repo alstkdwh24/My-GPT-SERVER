@@ -23,8 +23,8 @@ public class NaverRestController {
 
     @PostMapping("/naverCode")
     public String naverLoginComplete(HttpSession session) {
-        String code=(String)session.getAttribute("code");
-        String state=(String)session.getAttribute("state");
+        String code = (String) session.getAttribute("code");
+        String state = (String) session.getAttribute("state");
 
         if (code == null || code.isEmpty()) {
             return "네이버 로그인 코드가 없습니다.";
@@ -36,11 +36,12 @@ public class NaverRestController {
         String tokenUrl = "https://nid.naver.com/oauth2.0/token?" +
                 "grant_type=authorization_code" +
                 "&client_id=" + naverSecretId +
-                "&client_secret=" +naverSecretValue+
+                "&client_secret=" + naverSecretValue +
                 "&code=" + code
                 +
-                "&state" + state;        try {
-            String response = restTemplate.postForObject(tokenUrl,headers, String.class);
+                "&state" + state;
+        try {
+            String response = restTemplate.postForObject(tokenUrl, headers, String.class);
             com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
             com.fasterxml.jackson.databind.JsonNode jsonNode = objectMapper.readTree(response);
             String accessToken = jsonNode.get("access_token").asText();
@@ -76,17 +77,19 @@ public class NaverRestController {
                 entity,
                 NaverUserInfoResponseDTO.class
         );
-        System.out.println("User Info: " + response.getBody().getResponse().getName() );
+        System.out.println("User Info: " + response.getBody().getResponse().getName());
         System.out.println("User Email: " + response.getBody().getResponse().getEmail());
         System.out.println("User ID: " + response.getBody().getResponse().getId());
         System.out.println("User Profile Image: " + response.getBody().getResponse().getProfileImage());
         System.out.println("User nickname: " + response.getBody().getResponse().getNickname());
+        System.out.println("User response" + response.getBody().getResponse().toString());
 // 또는
         if (response.getStatusCode().is2xxSuccessful()) {
             return ResponseEntity.ok(response.getBody());
         } else {
 
-return    ResponseEntity.status(response.getStatusCode()).body(null);    }
+            return ResponseEntity.status(response.getStatusCode()).body(null);
+        }
     }
 
 }

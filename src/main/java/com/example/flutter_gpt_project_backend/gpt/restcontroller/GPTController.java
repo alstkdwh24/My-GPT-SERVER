@@ -59,7 +59,7 @@ public class GPTController {
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         System.out.println("Response: " + response.getBody());
         session.setAttribute("lastGptResponse", response.getBody());
-
+        System.out.println(1);
         return ResponseEntity.ok(response.getBody());
     }
 
@@ -102,6 +102,7 @@ public class GPTController {
         ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
         System.out.println("Response: " + response.getBody());
         session.setAttribute("lastGptResponse", response.getBody());
+        System.out.println("11111");
         return ResponseEntity.ok(response.getBody());
 
 
