@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+
 }
 
 group = 'com.example'
@@ -13,7 +15,18 @@ java {
     }
 }
 
+
+ext {
+    snippetsDir = file('build/generated-snippets') // (5)
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
 configurations {
+    asciidoctorExt // (2)
+
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -30,6 +43,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit'
+    implementation 'org.junit.jupiter:junit-jupiter'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
@@ -37,7 +53,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'mysql:mysql-connector-java:8.0.33'
-//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     runtimeOnly 'com.h2database:h2'
 
     //modelMapper 의존성
@@ -60,9 +76,42 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     //구글 OAuth2 의존성
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'}
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    //Docs
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor' // (3)
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc' // (4)
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets') // (5)
+}
 
 tasks.named('test') {
     useJUnitPlatform()
+    outputs.dir snippetsDir // (6)
+
 }
 
+
+
+
+asciidoctor {
+    configurations 'asciidoctorExt' // (7)
+    baseDirFollowsSourceFile() // (8)
+    inputs.dir snippetsDir // (9)
+    dependsOn test // (10)
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')  // (11)
+}
+
+task copyDocument(type: Copy) { // (12)
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}

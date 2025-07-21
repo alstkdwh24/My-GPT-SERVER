@@ -1,6 +1,7 @@
 package com.example.flutter_gpt_project_backend.config;
 
 import com.example.flutter_gpt_project_backend.member.service.CustomUserDetailsService;
+import com.example.flutter_gpt_project_backend.member.service.MemberService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +15,13 @@ import java.io.IOException;
 
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final CustomUserDetailsService customUserDetailsService;
+
+    private final MemberService memberService;
 
     private final JwtUtil jwtUtil;
 
-    public JwtAuthFilter(CustomUserDetailsService customUserDetailsService, JwtUtil jwtUtil) {
-        this.customUserDetailsService = customUserDetailsService;
+    public JwtAuthFilter(MemberService memberService, JwtUtil jwtUtil) {
+        this.memberService = memberService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -51,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     try{
                         Long userId = Long.valueOf(userIdString);
 
-                        UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId.toString());
+                        UserDetails userDetails = memberService.loadUserByUsername(userId.toString());
                         if(userDetails != null){
                             // UserDetails, Password, Role -> 접근 권한 인증 토큰을 생성
                             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

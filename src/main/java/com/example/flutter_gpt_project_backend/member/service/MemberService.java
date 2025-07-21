@@ -8,6 +8,8 @@ import com.example.flutter_gpt_project_backend.member.entity.Member;
 import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service("memberService")
-public class MemberService {
+public class MemberService implements UserDetailsService {
     private final JwtUtil jwtUtil;
     private final MemberRepository memberRepository;
     private final PasswordEncoder encoder;
     private final ModelMapper modelMapper;
+
+
 
     public MemberService(/*JwtUtil jwtUtil,*/ JwtUtil jwtUtil, MemberRepository memberRepository, PasswordEncoder encoder, ModelMapper modelMapper) {
         this.jwtUtil = jwtUtil;
@@ -57,5 +61,16 @@ public class MemberService {
         memberRepository.save(member);
 
         return member.getId();
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Member member = memberRepository.findMemberByUserId(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        return CustomUserInfoDTO.toSpringUser(member);
+
     }
 }
