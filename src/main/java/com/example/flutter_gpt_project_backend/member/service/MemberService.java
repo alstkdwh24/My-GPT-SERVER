@@ -1,11 +1,9 @@
 package com.example.flutter_gpt_project_backend.member.service;
 
 
-import com.example.flutter_gpt_project_backend.config.CustomUserInfoDTO;
-import com.example.flutter_gpt_project_backend.config.JwtUtil;
-import com.example.flutter_gpt_project_backend.member.dto.request.LoginRequestDTO;
-import com.example.flutter_gpt_project_backend.member.entity.Member;
-import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.example.flutter_gpt_project_backend.config.CustomUserInfoDTO;
+import com.example.flutter_gpt_project_backend.config.JwtUtil;
+import com.example.flutter_gpt_project_backend.member.dto.request.LoginRequestDTO;
+import com.example.flutter_gpt_project_backend.member.entity.Member;
+import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
 
 @Service("memberService")
 public class MemberService implements UserDetailsService {

@@ -1,8 +1,8 @@
 package com.example.flutter_gpt_project_backend.config;
 
-import lombok.Builder;
-
 import java.util.Map;
+
+import lombok.Builder;
 
 @Builder
 public class GoogleUserDetails implements OAuth2UserInfo{

@@ -1,9 +1,8 @@
 package com.example.flutter_gpt_project_backend.member.dto.request;
 
-import com.example.flutter_gpt_project_backend.member.entity.Role;
-import jakarta.validation.constraints.NotBlank;
-
 import java.util.UUID;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class MemberReqDTO {
     private UUID id;

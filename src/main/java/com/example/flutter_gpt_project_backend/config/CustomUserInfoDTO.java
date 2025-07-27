@@ -1,14 +1,15 @@
 package com.example.flutter_gpt_project_backend.config;
 
-import com.example.flutter_gpt_project_backend.member.dto.request.MemberReqDTO;
-import com.example.flutter_gpt_project_backend.member.entity.Member;
-import com.example.flutter_gpt_project_backend.member.entity.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.flutter_gpt_project_backend.member.dto.request.MemberReqDTO;
+import com.example.flutter_gpt_project_backend.member.entity.Member;
+import com.example.flutter_gpt_project_backend.member.entity.Role;
 
 public class CustomUserInfoDTO extends MemberReqDTO implements UserDetails {
 

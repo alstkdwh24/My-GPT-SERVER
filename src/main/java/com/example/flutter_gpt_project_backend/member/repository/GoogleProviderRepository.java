@@ -1,10 +1,10 @@
 package com.example.flutter_gpt_project_backend.member.repository;
 
-import com.example.flutter_gpt_project_backend.member.entity.GoogleMember;
-import com.example.flutter_gpt_project_backend.member.entity.GoogleProvider;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
+import com.example.flutter_gpt_project_backend.member.entity.GoogleProvider;
 
 public interface GoogleProviderRepository extends JpaRepository<GoogleProvider, UUID> {
 

@@ -1,13 +1,21 @@
 package com.example.flutter_gpt_project_backend.member.restcontroller;
 
-import com.example.flutter_gpt_project_backend.member.dto.request.NaverTokenDTO;
-import com.example.flutter_gpt_project_backend.member.dto.response.KakaoLoginResponseDTO;
-import com.example.flutter_gpt_project_backend.member.dto.response.NaverUserInfoResponseDTO;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.flutter_gpt_project_backend.member.dto.request.NaverTokenDTO;
+import com.example.flutter_gpt_project_backend.member.dto.response.NaverUserInfoResponseDTO;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/naver")

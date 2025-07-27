@@ -1,13 +1,14 @@
 package com.example.flutter_gpt_project_backend.config;
 
-import com.example.flutter_gpt_project_backend.member.entity.Member;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import com.example.flutter_gpt_project_backend.member.entity.Member;
 
 public class CustomSecurityUserDetails implements UserDetails {
     private final Member member;
