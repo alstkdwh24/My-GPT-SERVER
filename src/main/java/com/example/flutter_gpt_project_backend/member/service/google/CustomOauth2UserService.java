@@ -1,21 +1,22 @@
 package com.example.flutter_gpt_project_backend.member.service.google;
 
-import com.example.flutter_gpt_project_backend.config.CustomOauth2UserDetails;
-import com.example.flutter_gpt_project_backend.config.GoogleUserDetails;
-import com.example.flutter_gpt_project_backend.config.OAuth2UserInfo;
-import com.example.flutter_gpt_project_backend.member.entity.GoogleMember;
-import com.example.flutter_gpt_project_backend.member.entity.GoogleProvider;
-import com.example.flutter_gpt_project_backend.member.entity.Member;
-import com.example.flutter_gpt_project_backend.member.entity.Role;
-import com.example.flutter_gpt_project_backend.member.repository.GoogleProviderRepository;
-import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.example.flutter_gpt_project_backend.config.CustomOauth2UserDetails;
+import com.example.flutter_gpt_project_backend.config.GoogleUserDetails;
+import com.example.flutter_gpt_project_backend.config.OAuth2UserInfo;
+import com.example.flutter_gpt_project_backend.member.entity.GoogleMember;
+import com.example.flutter_gpt_project_backend.member.entity.GoogleProvider;
+import com.example.flutter_gpt_project_backend.member.entity.Role;
+import com.example.flutter_gpt_project_backend.member.repository.GoogleProviderRepository;
+import com.example.flutter_gpt_project_backend.member.repository.MemberRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service("customOauth2UserService")
 @Slf4j

@@ -1,6 +1,7 @@
 package com.example.flutter_gpt_project_backend.config;
 
 import com.example.flutter_gpt_project_backend.member.service.CustomUserDetailsService;
+import com.example.flutter_gpt_project_backend.member.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -22,6 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
+
+    private final MemberService  memberService;
     private final JwtUtil jwtUtil;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
@@ -31,8 +36,9 @@ public class SecurityConfig {
       "/api/**", "/api/askGPT/**",
     };
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtUtil jwtUtil, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, MemberService memberService, JwtUtil jwtUtil, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.customUserDetailsService = customUserDetailsService;
+        this.memberService = memberService;
         this.jwtUtil = jwtUtil;
         this.customAccessDeniedHandler = customAccessDeniedHandler;
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
@@ -53,16 +59,18 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
 
-        http.addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter
+        http.addFilterBefore(new JwtAuthFilter(memberService, jwtUtil), UsernamePasswordAuthenticationFilter
                 .class);
 
         // OAuth 2.0 로그인 방식 설정
         http
-                .oauth2Login((auth) -> auth
-                        .loginPage("/oauth-login/login/google_login") // ❌ 사용자 정의 로그인 페이지 경로
-                        .defaultSuccessUrl("/oauth-login/login/home") // ✅ 성공 시 이동할 경로
-                        .failureUrl("/oauth-login/login") // ❌ 실패 시 이동할 경로
-                        .permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/oauth2/**", "/login/**", "/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .defaultSuccessUrl("/api/oauth-login/login/home")  // 로그인 성공 후 이동 경로
+                        .failureUrl("/oauth-login/login")                  // 로그인 실패 시 이동 경로
                 );
 
 
@@ -70,16 +78,8 @@ public class SecurityConfig {
                 .logout((auth) -> auth
                         .logoutUrl("/oauth-login/logout"));
 
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(AUTH_WHITELIST).permitAll()
-
-
-                //@PreAuthorization 사용 -> 모든 경로에 대한 인증처리는 pass
-                .anyRequest().permitAll()
-
-
-        );
 
         return http.build();
     }
+
 }

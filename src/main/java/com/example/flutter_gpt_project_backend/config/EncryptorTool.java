@@ -1,10 +1,6 @@
 package com.example.flutter_gpt_project_backend.config;
 
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.jasypt.util.text.BasicTextEncryptor;
-
-import java.util.Base64;
 
 public class EncryptorTool {
     public static void main(String[] args){

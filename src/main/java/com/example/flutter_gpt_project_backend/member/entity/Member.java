@@ -1,8 +1,14 @@
 package com.example.flutter_gpt_project_backend.member.entity;
 
-import jakarta.persistence.*;
-
 import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 @Entity
 @Table(name = "member")
 public class Member {

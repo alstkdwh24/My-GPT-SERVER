@@ -1,13 +1,14 @@
 package com.example.flutter_gpt_project_backend.config;
 
-import com.example.flutter_gpt_project_backend.member.entity.GoogleMember;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
+import com.example.flutter_gpt_project_backend.member.entity.GoogleMember;
 
 public class CustomOauth2UserDetails implements UserDetails, OAuth2User {
 

@@ -1,22 +1,25 @@
 package com.example.flutter_gpt_project_backend.member.restcontroller;
 
-import com.example.flutter_gpt_project_backend.member.dto.request.KakaoLoginDTO;
-import com.example.flutter_gpt_project_backend.member.dto.response.KakaoLoginResponseDTO;
-import com.example.flutter_gpt_project_backend.member.dto.response.KakaoResponseLoginDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.flutter_gpt_project_backend.member.dto.request.KakaoLoginDTO;
+import com.example.flutter_gpt_project_backend.member.dto.response.KakaoLoginResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/kakao")

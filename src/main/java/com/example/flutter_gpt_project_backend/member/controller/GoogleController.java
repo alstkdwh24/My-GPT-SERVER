@@ -5,23 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/oauth-login")
+@RequestMapping("/api/oauth-login/login")
 public class GoogleController {
 
-        @GetMapping("/login/google_login")
+    @GetMapping("/home")
     public String googleLogin() {
-
-        return "oauth-login/login/google_login";  // 템플릿 경로
+        return "api/oauth-login/login/home";  // 템플릿 경로
     }
-    @GetMapping("/login")
-    public String login() {
-        return "oauth-login/login";  // 템플릿 경로
-    }
-
-    @GetMapping("/login/home")
-    public String home() {
-        return "oauth-login/login/home";  // 템플릿 경로
-    }
-
-
 }

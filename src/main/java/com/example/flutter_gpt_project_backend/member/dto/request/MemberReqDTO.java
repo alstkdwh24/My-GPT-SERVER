@@ -1,8 +1,8 @@
 package com.example.flutter_gpt_project_backend.member.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-
 import java.util.UUID;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class MemberReqDTO {
     private UUID id;
@@ -17,7 +17,7 @@ public class MemberReqDTO {
     private String name;
 
 
-    private String role;
+//    private String role;
 
     private String nickname;
 
@@ -30,7 +30,7 @@ public class MemberReqDTO {
         this.userPw = userPw;
         this.email = email;
         this.name = name;
-        this.role = role;
+//        this.role = role;
         this.nickname = nickname;
     }
 
@@ -78,14 +78,14 @@ public class MemberReqDTO {
     }
 
 
-    public String getRole() {
-        return role;
-    }
-
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
+//
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 
     public String getNickname() {
         return nickname;
